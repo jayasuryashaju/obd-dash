@@ -10,7 +10,11 @@ body {
 button { font: inherit; cursor: pointer; }
 
 .app { position: fixed; inset: 0; }
-.stage { position: absolute; inset: 0; touch-action: none; }
+.stage {
+  position: absolute; touch-action: none;
+  top: env(safe-area-inset-top); bottom: env(safe-area-inset-bottom);
+  left: env(safe-area-inset-left); right: env(safe-area-inset-right);
+}
 .dash { position: absolute; inset: 0; overflow: hidden; }
 
 /* shared gauge mechanics */
@@ -37,23 +41,24 @@ button { font: inherit; cursor: pointer; }
 .pill.live i { background: #2fdc6c; box-shadow: 0 0 6px #2fdc6c; }
 .pill.error i { background: #ff4a3a; }
 .pill.connecting i, .pill.initialising i, .pill.pairing i { background: #ffc531; }
-.tabs { flex: 1; display: flex; gap: 4px; justify-content: center; overflow-x: auto; scrollbar-width: none; }
-.tabs button, .actions button {
-  border: 0; background: #1b1b1bcc; color: #aaa;
-  padding: 6px 12px; border-radius: 8px; font-size: 13px; white-space: nowrap;
+.switcher { flex: 1; display: flex; justify-content: center; align-items: center; gap: 4px; min-width: 0; }
+.switcher button, .actions button {
+  border: 0; background: #1b1b1bcc; color: #ccc;
+  height: 34px; border-radius: 9px; font-size: 13px; white-space: nowrap;
 }
-.tabs button.on { background: #fff; color: #000; }
+.switcher > button:not(.cur) { width: 36px; font-size: 22px; line-height: 1; padding: 0 0 3px; }
+.switcher .cur {
+  display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; min-width: 150px; justify-content: center;
+  background: #fff; color: #000; font-weight: 600; overflow: hidden; text-overflow: ellipsis;
+}
+.switcher .cur small { font-weight: 500; color: #666; font-size: 11px; }
 .actions { display: flex; gap: 4px; }
-.actions button { width: 34px; padding: 6px 0; font-size: 16px; }
-
-.dots {
-  position: absolute; bottom: max(8px, env(safe-area-inset-bottom)); left: 50%;
-  transform: translateX(-50%); display: flex; gap: 6px; z-index: 10;
-  opacity: 0; transition: opacity 0.25s;
+.actions button { width: 36px; font-size: 16px; }
+.design-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.design-list button {
+  padding: 11px 10px; border-radius: 9px; border: 1px solid #2c2e31; background: #1a1b1e; color: #ddd; text-align: left; font-size: 14px;
 }
-.dots.show { opacity: 1; }
-.dots i { width: 6px; height: 6px; border-radius: 50%; background: #fff4; }
-.dots i.on { background: #fff; }
+.design-list button.on { background: #fff; color: #000; border-color: #fff; font-weight: 600; }
 
 /* ---------- start screen ---------- */
 .start {
@@ -62,11 +67,11 @@ button { font: inherit; cursor: pointer; }
   background: #000c; backdrop-filter: blur(6px);
 }
 .start-card {
-  width: min(520px, 100%);
+  width: min(520px, 100%); max-height: calc(100vh - 32px); overflow-y: auto;
   background: #121315; border: 1px solid #26282b; border-radius: 16px;
   padding: 22px 24px;
 }
-.start-card h1 { margin: 0; font: 800 34px 'Barlow Condensed', sans-serif; letter-spacing: 0.02em; }
+.start-card h1 { margin: 0; font: 600 34px 'Barlow Semi Condensed', sans-serif; letter-spacing: 0.02em; }
 .sub { margin: 2px 0 18px; color: #8a8f95; font-size: 13px; }
 .start-btns { display: flex; gap: 10px; flex-wrap: wrap; }
 .start-btns button {

@@ -89,13 +89,20 @@ export function Gauge({ x, y, r, sensor, d, shape, edit, onEdit, preview, big })
   const n = r > 260 ? 40 : r > 150 ? 30 : 22;
   const { s, frac, text } = preview || readSensor(sensor, d);
   const fs = r * (text.length > 4 ? 1.35 / text.length : 0.34);
-  const label = s.unit ? `${s.label} ${s.unit}` : s.label;
+  // Fit the label inside the face: shrink, then fall back to the short name.
+  const want = Math.max(12, r * 0.085);
+  const avail = r * (big ? 1.05 : 0.98);
+  const fit = (str) => Math.min(want, avail / (str.length * 0.78));
+  let label = s.unit ? `${s.label} ${s.unit}` : s.label;
+  if (fit(label) < want * 0.85) label = s.unit ? `${s.short} ${s.unit}` : s.short;
+  if (fit(label) < 10) label = s.short;
+  const lfs = fit(label);
   return (
     <g transform={`translate(${x} ${y})`}>
       <GaugeFace r={r} sensor={sensor} big={big} />
       <Blades r={r} shape={shape} frac={frac} n={n} />
       <text y={r * (big ? 0.1 : 0.12)} textAnchor="middle" className="g-val" style={{ fontSize: big ? r * 0.3 : fs }}>{text}</text>
-      <text y={r * (big ? 0.28 : 0.33)} textAnchor="middle" className="g-lbl" style={{ fontSize: Math.max(13, r * 0.085) }}>{label}</text>
+      <text y={r * (big ? 0.28 : 0.33)} textAnchor="middle" className="g-lbl" style={{ fontSize: lfs }}>{label}</text>
       <path d={`M${-r * 0.05} ${r * 0.44}L${r * 0.05} ${r * 0.44}L0 ${r * 0.5}Z`} className="g-mark" />
       {edit && <circle r={r * 1.03} className="edit-hit" onClick={onEdit} />}
     </g>
@@ -183,12 +190,16 @@ export function Arc({ sensor, d, edit, onEdit }) {
 /** Big number with label – (x,y) is the value baseline centre. */
 export function Readout({ x, y, size, sensor, d, edit, onEdit }) {
   const { s, text } = readSensor(sensor, d);
+  const lfs = Math.max(16, Math.min(30, size * 0.16));
+  const ufs = Math.max(15, Math.min(28, size * 0.15));
+  const top = y - size * 0.86 - lfs * 0.35; // label baseline, clear of the digits' cap height
+  const bot = y + size * 0.18 + ufs; // unit baseline, below the digits
   return (
     <g>
-      <text x={x} y={y - size * 0.82} textAnchor="middle" className="r-lbl" style={{ fontSize: Math.max(16, size * 0.16) }}>{s.label}</text>
+      <text x={x} y={top} textAnchor="middle" className="r-lbl" style={{ fontSize: lfs }}>{s.label}</text>
       <text x={x} y={y} textAnchor="middle" className="r-val" style={{ fontSize: size }}>{text}</text>
-      {s.unit && <text x={x} y={y + size * 0.3} textAnchor="middle" className="r-unit" style={{ fontSize: Math.max(15, size * 0.15) }}>{s.unit}</text>}
-      {edit && <rect x={x - size * 0.9} y={y - size * 1.05} width={size * 1.8} height={size * 1.45} rx="12" className="edit-hit" onClick={onEdit} />}
+      {s.unit && <text x={x} y={bot} textAnchor="middle" className="r-unit" style={{ fontSize: ufs }}>{s.unit}</text>}
+      {edit && <rect x={x - size * 0.95} y={top - lfs - 8} width={size * 1.9} height={bot - top + lfs + 18} rx="12" className="edit-hit" onClick={onEdit} />}
     </g>
   );
 }

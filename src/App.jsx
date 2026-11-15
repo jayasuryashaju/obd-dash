@@ -116,10 +116,12 @@ export default function App() {
             <span className={`pill ${d.status}`}>
               <i />{d.source === 'demo' ? 'Demo' : STATUS_TEXT[d.status]}
             </span>
-            <div className="tabs">
-              {DASHBOARDS.map((x, i) => (
-                <button key={x.name} className={i === idx ? 'on' : ''} onClick={() => go(i)}>{x.name}</button>
-              ))}
+            <div className="switcher">
+              <button onClick={() => go(idx - 1)} aria-label="Previous design">‹</button>
+              <button className="cur" onClick={() => setPanel(panel === 'designs' ? null : 'designs')}>
+                {DASHBOARDS[idx].name}<small>{idx + 1}/{DASHBOARDS.length}</small>
+              </button>
+              <button onClick={() => go(idx + 1)} aria-label="Next design">›</button>
             </div>
             <div className="actions">
               <button onClick={goFullscreen} title="Fullscreen">⛶</button>
@@ -127,12 +129,19 @@ export default function App() {
               <button onClick={() => setPanel(panel === 'settings' ? null : 'settings')} title="Settings">⚙</button>
             </div>
           </div>
-          <div className={`dots ${chrome ? 'show' : ''}`}>
-            {DASHBOARDS.map((x, i) => <i key={x.name} className={i === idx ? 'on' : ''} />)}
-          </div>
         </>
       )}
 
+      {panel === 'designs' && (
+        <div className="panel">
+          <div className="panel-head"><h2>Designs</h2><button onClick={() => setPanel(null)}>✕</button></div>
+          <div className="design-list">
+            {DASHBOARDS.map((x, i) => (
+              <button key={x.name} className={i === idx ? 'on' : ''} onClick={() => { go(i); setPanel(null); }}>{x.name}</button>
+            ))}
+          </div>
+        </div>
+      )}
       {panel === 'settings' && <Settings d={d} close={() => setPanel(null)} />}
       {panel === 'log' && <LogPanel d={d} close={() => setPanel(null)} />}
     </div>

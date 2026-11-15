@@ -10,10 +10,10 @@ export const LAYOUTS = {
   apex: {
     name: 'Apex', group: 'complete', desc: 'Huge rev counter rising from the edge',
     slots: [
-      g(1000, 520, 360, 'rpm', true),
+      g(1000, 448, 340, 'rpm', true),
       g(400, 360, 190, 'speed'),
       g(270, 690, 62, 'voltage'), g(400, 712, 62, 'coolant'), g(530, 690, 62, 'iat'),
-      { t: 'readout', x: 1560, y: 250, size: 74, s: 'boost' },
+      { t: 'readout', x: 1576, y: 238, size: 70, s: 'boost' },
       { t: 'bar', x: 1436, y: 330, w: 40, h: 190, s: 'throttle' },
       { t: 'bar', x: 1556, y: 330, w: 40, h: 190, s: 'load' },
       { t: 'bar', x: 1676, y: 330, w: 40, h: 190, s: 'kmpl' },
@@ -24,7 +24,7 @@ export const LAYOUTS = {
     name: 'Horizon', group: 'complete', desc: 'Full-width rev arc over a giant speed',
     slots: [
       { t: 'arc', s: 'rpm' },
-      { t: 'readout', x: 1000, y: 560, size: 230, s: 'speed' },
+      { t: 'readout', x: 1000, y: 590, size: 220, s: 'speed' },
       g(300, 610, 110, 'coolant'), g(600, 640, 90, 'gear'),
       g(1400, 640, 90, 'kmpl'), g(1700, 610, 110, 'voltage'),
     ],
@@ -34,18 +34,18 @@ export const LAYOUTS = {
     slots: [
       g(530, 450, 330, 'rpm', true),
       g(1470, 450, 330, 'speed', true),
-      { t: 'readout', x: 1000, y: 330, size: 150, s: 'gear' },
-      { t: 'readout', x: 1000, y: 540, size: 64, s: 'coolant' },
-      { t: 'readout', x: 1000, y: 710, size: 64, s: 'kmpl' },
+      { t: 'readout', x: 1000, y: 340, size: 140, s: 'gear' },
+      { t: 'readout', x: 1000, y: 548, size: 62, s: 'coolant' },
+      { t: 'readout', x: 1000, y: 726, size: 62, s: 'kmpl' },
     ],
   },
   race: {
     name: 'Race', group: 'complete', desc: 'Shift bar, big gear, side data',
     slots: [
       { t: 'hbar', x: 140, y: 120, w: 1720, h: 78, s: 'rpm' },
-      { t: 'readout', x: 1000, y: 620, size: 330, s: 'gear' },
-      { t: 'readout', x: 470, y: 470, size: 150, s: 'speed' },
-      { t: 'readout', x: 1530, y: 470, size: 120, s: 'rpm' },
+      { t: 'readout', x: 1000, y: 640, size: 300, s: 'gear' },
+      { t: 'readout', x: 470, y: 480, size: 140, s: 'speed' },
+      { t: 'readout', x: 1530, y: 480, size: 120, s: 'rpm' },
       g(330, 690, 82, 'coolant'), g(590, 700, 82, 'throttle'),
       g(1410, 700, 82, 'voltage'), g(1670, 690, 82, 'kmpl'),
     ],

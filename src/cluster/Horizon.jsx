@@ -60,7 +60,7 @@ const Back = memo(({ redline }) => {
 
       {/* gear box */}
       <rect x="470" y="400" width="190" height="230" rx="22" fill="url(#hz-tile)" stroke="#1f2a30" strokeWidth="2" />
-      <text x="565" y="446" textAnchor="middle" className="hz-lbl">GEAR</text>
+      <text x="565" y="438" textAnchor="middle" className="hz-lbl">GEAR</text>
       {/* rpm readout */}
       <text x="1530" y="446" textAnchor="end" className="hz-lbl">ENGINE</text>
       <text x="1530" y="600" textAnchor="end" className="hz-lbl">rpm</text>
@@ -119,7 +119,7 @@ export default function Horizon({ d }) {
       live={
         <>
           <RevArc rpm={v.rpm ?? 0} redline={d.settings.redline} />
-          <text x="565" y="590" textAnchor="middle" className={`hz-gear ${d.gear === 'N' ? 'n' : ''}`}>{d.gear}</text>
+          <text x="565" y="602" textAnchor="middle" className={`hz-gear ${d.gear === 'N' ? 'n' : ''}`}>{d.gear}</text>
           <Telltale kind="shift" x={565} y={360} size={46} on={L.shift} color={LAMP.green} />
           <text x="1530" y="548" textAnchor="end" className="hz-rpm">{f0(v.rpm)}</text>
           <text x={C.cx} y={620} textAnchor="middle" className="hz-speed">{f0(v.speed)}</text>
