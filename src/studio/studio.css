@@ -1,0 +1,95 @@
+.studio { position: absolute; inset: 0; background: var(--bg); font-family: 'Saira', sans-serif; overflow: hidden; }
+.studio .st-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.studio .st-bg { fill: var(--bg); }
+
+/* gauges */
+.studio .bl { fill: var(--off); }
+.studio .bl.on { fill: var(--acc); }
+.studio .g-glow { fill: none; stroke: var(--glow); opacity: 0.45; }
+.studio .g-ring { fill: none; stroke: var(--ring); }
+.studio .g-ringfill { fill: var(--acc); opacity: 0.55; }
+.studio .g-face { fill: var(--face); }
+.studio .g-tick { fill: none; stroke: var(--tick); }
+.studio .g-num { fill: var(--fsub); font-weight: 600; }
+.studio .g-num.bgn { fill: var(--sub); }
+.studio .g-val { fill: var(--ftxt); font-weight: 600; letter-spacing: -0.01em; }
+.studio .g-lbl { fill: var(--fsub); font-weight: 600; letter-spacing: 0.14em; }
+.studio .g-mark { fill: var(--acc); }
+.studio .r-val { fill: var(--txt); font-weight: 300; letter-spacing: -0.02em; }
+.studio .r-lbl { fill: var(--sub); font-weight: 600; letter-spacing: 0.22em; }
+.studio .r-unit { fill: var(--sub); font-weight: 500; letter-spacing: 0.08em; }
+
+/* header */
+.studio .hd-dot { fill: var(--acc); }
+.studio .hd-brand { fill: var(--txt); font-size: 26px; font-weight: 600; letter-spacing: 0.24em; }
+.studio .hd-badge { fill: none; stroke: #e2b93b; stroke-width: 2; }
+.studio .hd-badge-t { fill: #e2b93b; font-size: 17px; font-weight: 600; letter-spacing: 0.12em; }
+.studio .hd-live { fill: none; stroke: var(--sub); stroke-width: 2; }
+.studio .hd-live.on { stroke: var(--acc); }
+.studio .hd-live-t { fill: var(--sub); font-size: 17px; font-weight: 600; letter-spacing: 0.16em; }
+.studio .hd-live-t.on { fill: var(--acc); }
+.studio .hd-clock { fill: var(--txt); font-size: 32px; font-weight: 400; }
+.studio .hd-edit { fill: var(--acc); font-size: 22px; font-weight: 600; letter-spacing: 0.16em; }
+
+/* edit mode */
+.studio .edit-hit {
+  fill: transparent; stroke: var(--acc); stroke-width: 3; stroke-dasharray: 14 10;
+  cursor: pointer; pointer-events: all; animation: st-pulse 1.4s ease-in-out infinite;
+}
+@keyframes st-pulse { 50% { stroke-opacity: 0.35; } }
+
+/* toolbar */
+.studio .st-toolbar { cursor: pointer; }
+.studio .tb-bg { fill: var(--bg2); stroke: var(--line); stroke-width: 2; opacity: 0.94; }
+.studio .tb-hit { fill: transparent; }
+.studio .tb-btn:hover .tb-hit, .studio .tb-btn.on .tb-hit { fill: var(--glow); }
+.studio .tb-ic { fill: none; stroke: var(--txt); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.studio .tb-btn.on .tb-ic { stroke: var(--acc); }
+.studio .tb-lbl { fill: var(--sub); font-size: 16px; font-weight: 600; letter-spacing: 0.16em; }
+.studio .tb-btn.on .tb-lbl { fill: var(--acc); }
+
+/* panels (HTML overlay) */
+.st-panel {
+  position: absolute; left: 50%; bottom: 13%; transform: translateX(-50%);
+  width: min(560px, 94vw); max-height: 78vh; overflow-y: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+  padding: 14px 16px 16px; color: var(--txt); backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); z-index: 5;
+}
+.st-panel.wide { width: min(1080px, 96vw); }
+.st-ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.st-ph span { font-size: 13px; font-weight: 600; letter-spacing: 0.24em; color: var(--sub); }
+.st-ph button { background: none; border: 0; color: var(--sub); font-size: 18px; padding: 2px 6px; }
+.st-panel h4 { margin: 12px 0 8px; font-size: 12px; letter-spacing: 0.22em; color: var(--sub); font-weight: 600; }
+.seg { display: inline-flex; gap: 4px; padding: 3px; border-radius: 10px; background: var(--off); margin-bottom: 12px; }
+.seg button { border: 0; background: none; color: var(--sub); padding: 6px 16px; border-radius: 8px; font: 600 13px 'Saira', sans-serif; }
+.seg button.on { background: var(--acc); color: #000; }
+.cards { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.st-panel { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.card {
+  flex: 0 0 150px; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-align: left;
+  background: var(--bg2); border: 1.5px solid var(--line); border-radius: 14px; padding: 10px; color: var(--txt);
+  font-family: 'Saira', sans-serif;
+}
+.card.sel { border-color: var(--acc); box-shadow: 0 0 0 2px var(--glow); }
+.card b { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+.card small { font-size: 11px; color: var(--sub); line-height: 1.3; }
+.card-g { width: 100%; aspect-ratio: 1; background: var(--bg); border-radius: 10px; }
+.card.lay { flex-basis: 170px; }
+.thumb { width: 100%; aspect-ratio: 2000 / 900; background: var(--bg); border-radius: 8px; }
+.thumb .th-g { fill: none; stroke: var(--acc); stroke-width: 22; }
+.thumb .th-f { fill: var(--acc); opacity: 0.8; }
+.thumb .th-r { fill: var(--acc); opacity: 0.35; }
+.menu { display: flex; flex-direction: column; gap: 8px; }
+.menu button, .picker button {
+  text-align: left; background: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--txt); padding: 11px 12px; font: 500 14px 'Saira', sans-serif;
+}
+.menu b { color: var(--acc); }
+.menu p { margin: 4px 2px 0; font-size: 12px; color: var(--sub); }
+.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+.picker button { font-size: 13px; letter-spacing: 0.06em; }
+.picker button small { color: var(--sub); }
+.picker button.sel { border-color: var(--acc); color: var(--acc); }
+.studio .b-lbl { fill: var(--sub); font-size: 15px; font-weight: 600; letter-spacing: 0.06em; }
+.studio.light .st-vigr { opacity: 0.12; }

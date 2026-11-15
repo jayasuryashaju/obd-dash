@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDash, actions } from './store.js';
 import { WebBleTransport, isNative } from './obd/transports.js';
 import { tyreFactor, tyreDiameter } from './car.js';
+import Studio from './studio/Studio.jsx';
 import Touring, { TouringNight } from './cluster/Touring.jsx';
 import Heritage from './cluster/Heritage.jsx';
 import Chrono from './cluster/Chrono.jsx';
@@ -13,6 +14,7 @@ import Data from './dashboards/Data.jsx';
 import { sweep } from './cluster/kit.jsx';
 
 export const DASHBOARDS = [
+  { name: 'Studio', C: Studio },
   { name: 'Touring', C: Touring },
   { name: 'Touring Night', C: TouringNight },
   { name: 'Heritage', C: Heritage },

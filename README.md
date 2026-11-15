@@ -1,6 +1,6 @@
 # WagonR Dash
 
-Web dashboard for a 2016 Maruti WagonR VXi (K10B) that reads live data from a Bluetooth ELM327 OBD2 adapter. It has eight instrument clusters (Touring, Touring Night, Heritage, Chrono, Digital, Horizon, Sport, Motorsport) plus a Data diagnostics page. Tyre sizes (stock and fitted) are set in Settings, and OBD speed is corrected automatically.
+Web dashboard for a 2016 Maruti WagonR VXi (K10B) that reads live data from a Bluetooth ELM327 OBD2 adapter. It opens on **Studio**, a fully customisable gauge screen (6 styles × dark/light, 5 complete layouts + 6 build-your-own panels, tap-to-edit any gauge), and also has eight fixed instrument clusters (Touring, Touring Night, Heritage, Chrono, Digital, Horizon, Sport, Motorsport) plus a Data diagnostics page. Tyre sizes (stock and fitted) are set in Settings, and OBD speed is corrected automatically.
 
 ## Run
 
@@ -47,4 +47,5 @@ cd android && ./gradlew assembleDebug    # → android/app/build/outputs/apk/deb
 - `src/store.js`: live state, trip stats, history, settings
 - `src/cluster/kit.jsx`: gauge engine (geometry, spring needles, start-up sweep, warning lamps, layered rendering)
 - `src/cluster/*`: one file per instrument cluster
+- `src/studio/*`: Studio – sensor catalogue, styles, blade gauge widgets, layouts and the editor UI
 - `src/dashboards/Data.jsx`: sensor diagnostics grid
