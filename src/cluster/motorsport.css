@@ -1,0 +1,31 @@
+.motorsport { font-family: 'Saira', sans-serif; }
+.motorsport .ms-box { fill: #070707; stroke: #2b2b2b; stroke-width: 3; }
+.motorsport .ms-box.gear { stroke: #ff8a00; stroke-width: 4; }
+.motorsport .ms-box.alarm { fill: #c3110a; stroke: #ff4a3a; animation: ms-alarm 0.8s steps(2, jump-none) infinite; }
+@keyframes ms-alarm { 50% { fill: #5a0805; } }
+.motorsport .ms-lbl { fill: #ff8a00; font-size: 24px; font-weight: 600; letter-spacing: 3px; white-space: pre; }
+.motorsport .ms-lbl.alarm { fill: #fff; }
+.motorsport .ms-unit { fill: #5a5a5a; font-size: 22px; font-weight: 600; }
+.motorsport .ms-big { fill: #fff; font-size: 128px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.motorsport .ms-small { fill: #8a8a8a; font-size: 30px; font-weight: 600; }
+.motorsport .ms-gear { fill: #fff; font-size: 330px; font-weight: 700; }
+.motorsport .ms-gear.n { fill: #6a6a6a; }
+.motorsport .ms-gear.shift { fill: #3b7dff; }
+.motorsport .ms-val { fill: #fff; font-size: 60px; font-weight: 600; }
+.motorsport .ms-val.alarm { fill: #fff; }
+
+.motorsport .ms-seg { fill: #121212; }
+.motorsport .ms-seg.on.g { fill: #1fe05a; }
+.motorsport .ms-seg.on.y { fill: #ffd000; }
+.motorsport .ms-seg.on.r { fill: #ff2414; }
+.motorsport .ms-scale { stroke: #6a6a6a; stroke-width: 3; }
+.motorsport .ms-scale.red, .motorsport .ms-scalet.red { stroke: #ff2414; fill: #ff2414; }
+.motorsport .ms-scalet { fill: #9a9a9a; font-size: 30px; font-weight: 600; }
+
+.motorsport .ms-led-off { fill: #141414; stroke: #000; stroke-width: 4; }
+.motorsport .ms-led.g { fill: #22ff66; filter: drop-shadow(0 0 10px #22ff66); }
+.motorsport .ms-led.y { fill: #ffd400; filter: drop-shadow(0 0 10px #ffd400); }
+.motorsport .ms-led.r { fill: #ff2414; filter: drop-shadow(0 0 10px #ff2414); }
+.motorsport .ms-led.b { fill: #3b7dff; filter: drop-shadow(0 0 14px #3b7dff); }
+.motorsport .ms-flash { animation: ms-blink 0.14s steps(2, jump-none) infinite; }
+@keyframes ms-blink { 50% { opacity: 0.1; } }

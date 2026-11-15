@@ -1,0 +1,32 @@
+.digital { font-family: 'Saira', sans-serif; }
+.digital .dg-track { fill: none; stroke: #0f1d33; stroke-width: 22; }
+.digital .dg-track.red { stroke: #33101e; }
+.digital .dg-tick { fill: none; }
+.digital .dg-tick.minor { stroke: #2f4a70; stroke-width: 3; }
+.digital .dg-tick.major { stroke: #c9ddf6; stroke-width: 5; }
+.digital .dg-tick.major.red { stroke: #ff4d6d; }
+.digital .dg-num { fill: #9fb6d6; font-size: 50px; font-weight: 400; }
+.digital .dg-num.red { fill: #ff5a78; }
+.digital .dg-inner { fill: #040910; stroke: #18304f; stroke-width: 2; }
+.digital .dg-unit { fill: #5f7ea6; font-size: 24px; letter-spacing: 2px; }
+.digital .dg-lbl { fill: #5f7ea6; font-size: 26px; letter-spacing: 4px; }
+.digital .dg-seg-off { fill: none; stroke: #0f1d33; stroke-width: 22; }
+.digital .dg-seg-on { fill: none; stroke-width: 22; }
+
+.digital .dg-prog { fill: none; stroke-width: 22; }
+.digital .dg-prog.red { stroke: #ff2d55; }
+.digital .dg-prog-glow { fill: none; stroke-width: 46; opacity: 0.18; }
+
+.digital .dg-gear { fill: #fff; font-size: 200px; font-weight: 600; }
+.digital .dg-gear.n { fill: #7f97b8; }
+.digital .dg-speed { fill: #fff; font-size: 196px; font-weight: 300; letter-spacing: -4px; }
+.digital .dg-sub { fill: #8aa6cc; font-size: 30px; }
+.digital .dg-mini { fill: #d7e6f8; font-size: 30px; font-weight: 600; }
+.digital .dg-clock { fill: #e6f0ff; font-size: 64px; font-weight: 300; }
+.digital .dg-trip { fill: #e6f0ff; font-size: 32px; font-weight: 400; white-space: pre; }
+.digital .dg-u { fill: #6d88ad; font-size: 26px; }
+
+.digital .dg-clbl { fill: #4f6c94; font-size: 18px; font-weight: 600; letter-spacing: 4px; }
+.digital .dg-cval { fill: #e6f0ff; font-size: 44px; font-weight: 300; }
+.digital .dg-cunit { fill: #56739b; font-size: 20px; font-weight: 400; }
+.digital .dg-cbarv { fill: #a9c3e6; font-size: 20px; font-weight: 600; letter-spacing: 1px; }

@@ -1,0 +1,6 @@
+{
+  "appId": "com.obddash.wagonr",
+  "appName": "WagonR Dash",
+  "webDir": "dist",
+  "android": { "backgroundColor": "#000000" }
+}

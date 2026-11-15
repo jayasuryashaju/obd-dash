@@ -1,0 +1,14 @@
+.chrono { font-family: 'Jost', sans-serif; }
+.chrono .ch-minute { fill: none; stroke: #dfe7f5; stroke-width: 2; opacity: 0.85; }
+.chrono .ch-minute.major { stroke-width: 4; opacity: 1; }
+.chrono .ch-minute.thin { stroke-width: 1.5; opacity: 0.6; }
+.chrono .ch-num { fill: #dde3ec; font-size: 46px; font-weight: 400; }
+.chrono .ch-num.red { fill: #ff7a66; }
+.chrono .ch-label { fill: #9fb0c9; font-size: 22px; letter-spacing: 6px; }
+.chrono .ch-sublbl { fill: #b7c3d5; font-size: 18px; font-weight: 500; }
+.chrono .ch-subname { fill: #8396b3; font-size: 15px; letter-spacing: 4px; }
+.chrono .ch-gear { fill: #15171a; font-size: 104px; font-weight: 500; }
+.chrono .ch-gear.n { fill: #6b6f75; }
+.chrono .ch-speed { fill: #e9edf3; font-size: 52px; font-weight: 400; }
+.chrono .ch-u { fill: #8a9ab2; font-size: 26px; }
+.chrono .ch-trip { fill: #9fb0c9; font-size: 26px; letter-spacing: 1px; }

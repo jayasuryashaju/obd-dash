@@ -1,0 +1,40 @@
+.data {
+  background: #0e1013;
+  color: #e6e8eb;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5vmin 3vmin;
+  gap: 2vmin;
+}
+.dt-head { display: flex; justify-content: space-between; font-size: 2.4vmin; color: #7b828c; }
+.dt-head span:first-child { color: #e6e8eb; font-weight: 600; }
+.dt-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(26vmin, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1.6vmin;
+}
+.dt-tile {
+  background: #161a1f;
+  border: 1px solid #22272e;
+  border-radius: 1.4vmin;
+  padding: 1.4vmin 1.8vmin 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+.dt-tile label { font-size: 2vmin; color: #7b828c; }
+.dt-val { display: flex; align-items: baseline; gap: 0.8vmin; }
+.dt-val b { font-size: 6vmin; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.dt-val span { font-size: 2vmin; color: #7b828c; }
+.dt-tile .spark { flex: 1; width: calc(100% + 3.6vmin); margin: 0 -1.8vmin; min-height: 4vmin; }
+.spark-line { fill: none; stroke: #4aa3ff; stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+.spark-fill { fill: #4aa3ff18; stroke: none; }
+.dt-tile.warn { border-color: #ff5a4a; }
+.dt-tile.warn .dt-val b { color: #ff7a6b; }
+.dt-tile.warn .spark-line { stroke: #ff5a4a; }
+.dt-tile.na { opacity: 0.4; }

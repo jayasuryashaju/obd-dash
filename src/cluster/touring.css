@@ -1,0 +1,37 @@
+.touring { font-family: 'Barlow Semi Condensed', sans-serif; }
+.touring .tr-baseline { fill: none; stroke: #3a3d42; stroke-width: 2; }
+.touring .tr-tick { fill: none; stroke-linecap: butt; }
+.touring .tr-tick.major { stroke: #f4f5f6; stroke-width: 8; }
+.touring .tr-tick.mid { stroke: #dfe2e5; stroke-width: 5; }
+.touring .tr-tick.minor { stroke: #8f959c; stroke-width: 3; }
+.touring .tr-tick.red { stroke: #ff3b2b; }
+.touring .tr-redband { fill: #d9261a; }
+.touring .tr-num { fill: #f2f3f4; font-size: 76px; font-weight: 500; }
+.touring .tr-num.red { fill: #ff4433; }
+.touring .tr-unit { fill: #8a9098; font-size: 27px; letter-spacing: 3px; }
+.touring .tr-mini-track { fill: none; stroke: #6b7178; stroke-width: 3; }
+.touring .tr-mini-lbl { fill: #b9bec4; font-size: 30px; font-weight: 500; }
+
+.touring .tr-mid-sm { fill: #cfd6de; font-size: 34px; font-weight: 500; }
+.touring .tr-rule { stroke: #1f2731; stroke-width: 2; }
+.touring .tr-mid-lbl { fill: #6c7682; font-size: 25px; letter-spacing: 3px; font-weight: 500; }
+.touring .tr-gear { fill: #ffffff; font-size: 230px; font-weight: 600; }
+.touring .tr-gear.n { fill: #8e98a3; }
+.touring .tr-speed { fill: #f0f3f6; font-size: 84px; font-weight: 500; }
+.touring .tr-mid-val { fill: #e9edf1; font-size: 36px; font-weight: 500; }
+.touring .tr-mid-u { fill: #6c7682; font-size: 24px; }
+
+/* ---- Night (amber illumination) ---- */
+.touring.night .tr-tick.major { stroke: #ffa63d; }
+.touring.night .tr-tick.mid { stroke: #f0912a; }
+.touring.night .tr-tick.minor { stroke: #9a5a1c; }
+.touring.night .tr-tick.red { stroke: #ff3b2b; }
+.touring.night .tr-num { fill: #ffab45; filter: drop-shadow(0 0 6px rgba(255, 140, 30, 0.55)); }
+.touring.night .tr-num.red { fill: #ff4433; filter: drop-shadow(0 0 6px rgba(255, 50, 30, 0.6)); }
+.touring.night .tr-unit, .touring.night .tr-mini-lbl { fill: #c9782c; }
+.touring.night .tr-mini-track { stroke: #9a5a1c; }
+.touring.night .tr-mid-sm, .touring.night .tr-mid-val, .touring.night .tr-speed { fill: #ffb259; }
+.touring.night .tr-mid-lbl, .touring.night .tr-mid-u { fill: #9a6230; }
+.touring.night .tr-gear { fill: #ffbe6e; }
+.touring.night .tr-gear.n { fill: #a8733d; }
+.touring.night .tr-rule { stroke: #3a2614; }

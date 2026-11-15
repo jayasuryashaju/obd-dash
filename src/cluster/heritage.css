@@ -1,0 +1,16 @@
+.heritage { font-family: 'Jost', sans-serif; }
+.heritage .hg-line { fill: none; stroke: #1a1a1a; stroke-width: 2.5; }
+.heritage .hg-tick { fill: none; stroke: #161513; }
+.heritage .hg-tick.major { stroke-width: 7; }
+.heritage .hg-tick.major.sm { stroke-width: 5; }
+.heritage .hg-tick.mid { stroke-width: 4; }
+.heritage .hg-tick.minor { stroke-width: 2.4; }
+.heritage .hg-red { fill: #c8341f; opacity: 0.92; }
+.heritage .hg-num { fill: #151412; font-size: 66px; font-weight: 500; }
+.heritage .hg-num.spd { font-size: 50px; }
+.heritage .hg-num-sm { fill: #151412; font-size: 29px; font-weight: 500; }
+.heritage .hg-label { fill: #4d4535; font-size: 24px; letter-spacing: 5px; }
+.heritage .hg-label-sm { fill: #4d4535; font-size: 19px; letter-spacing: 4px; font-weight: 500; }
+.heritage .hg-unit-sm { fill: #6a604c; font-size: 20px; letter-spacing: 1px; }
+.heritage .hg-drum { fill: #f1ece0; font-size: 34px; font-weight: 500; }
+.heritage .hg-drum.w { fill: #141414; }
