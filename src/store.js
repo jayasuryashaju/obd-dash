@@ -5,6 +5,7 @@ import { estimateGear, fuelRateLph, fuelSource, CAR, setTyre, tyreFactor } from 
 import { Elm327 } from './obd/elm327.js';
 import { WebBleTransport, NativeBleTransport, ClassicTransport, isNative } from './obd/transports.js';
 import { Simulator } from './obd/simulator.js';
+import { createLearner } from './learn/learner.js';
 
 const SETTINGS_KEY = 'obd-dash-settings';
 const HIST_KEYS = ['rpm', 'speed', 'throttle', 'load', 'map', 'coolant', 'iat', 'voltage', 'timing', 'stft', 'kmpl'];
@@ -19,6 +20,9 @@ const defaultSettings = {
   speedCorrection: 1.0, // extra manual trim on top of the tyre correction
   ve: 0.82,
   showHints: true,
+  learning: true,
+  aiUrl: 'https://wagonr-dash-api.onrender.com',
+  aiToken: '',
 };
 
 function loadSettings() {
@@ -44,8 +48,20 @@ let state = {
   history: Object.fromEntries(HIST_KEYS.map((k) => [k, []])),
   log: [],
   settings: loadSettings(),
+  learn: null, // { tank, score, style, alerts } refreshed ~1 Hz
+  toast: null,
 };
 setTyre(state.settings.tyre);
+
+// Separate learners so demo driving never pollutes what's learned from the car.
+export const learners = { obd: createLearner('wd'), demo: createLearner('wd-demo') };
+let learner = learners.obd;
+learner.onTyre(state.settings.tyre);
+export const activeLearner = () => learner;
+function useLearner(kind) {
+  learner = learners[kind];
+  learner.onTyre(state.settings.tyre); // re-applies its learned gears
+}
 let speedFactor = tyreFactor(state.settings.tyreStock, state.settings.tyre) * state.settings.speedCorrection;
 
 const listeners = new Set();
@@ -73,12 +89,19 @@ function onData(partial) {
   lastTs = now;
 
   const gear = estimateGear(values.speed ?? 0, values.rpm ?? 0);
-  const fuelLph = fuelRateLph(values, state.settings.ve);
+  const rpm = values.rpm ?? 0;
+  const fuelSrc = fuelSource(values);
+  const rawFuelLph = fuelRateLph(values, state.settings.ve);
+  // calibrated with what's been learned from fill-ups (ECU fuel rate is exact)
+  const fuelLph = rawFuelLph == null ? null : fuelSrc === 'ecu' ? rawFuelLph : rawFuelLph * learner.fuelFactor(rpm);
   const kmpl = fuelLph == null ? null : fuelLph < 0.05 ? (values.speed > 5 ? 99.9 : null) : Math.min(99.9, (values.speed ?? 0) / fuelLph);
 
-  const rpm = values.rpm ?? 0;
+  // Adaptive shift hint: light throttle → your learned efficient shift point,
+  // hard acceleration → the shift-light rpm from Settings.
   const shiftHint = /^[1-4]$/.test(gear) &&
-    (rpm >= state.settings.shiftRpm || (rpm > 2700 && (values.throttle ?? 100) < 30));
+    rpm >= learner.shiftThreshold(values.throttle ?? 0, state.settings.shiftRpm);
+
+  if (state.settings.learning) learner.ingest(values, { dt, gear, fuelLph, rawFuelLph, fuelSrc });
 
   const t = state.trip;
   const trip = {
@@ -100,7 +123,26 @@ function onData(partial) {
       history[k] = v == null ? arr : [...arr.slice(-(HIST_LEN - 1)), v];
     }
   }
-  set({ values, gear, shiftHint, fuelLph, fuelSrc: fuelSource(values), kmpl, trip, history });
+  const patch = { values, gear, shiftHint, fuelLph, fuelSrc, kmpl, trip, history };
+  if (now - lastLearnSnap > 1000) {
+    lastLearnSnap = now;
+    patch.learn = learnSnapshot();
+    const fresh = learner.takeNewAlerts();
+    if (fresh.length) patch.toast = { ...fresh[fresh.length - 1], shownAt: Date.now() };
+  }
+  set(patch);
+}
+
+let lastLearnSnap = 0;
+function learnSnapshot() {
+  const lt = learner.liveTrip;
+  return {
+    tank: learner.tankInfo(),
+    style: learner.styleLabel(),
+    score: lt && lt.dist > 0.2 ? learner.scoreOf(lt) : null,
+    alerts: learner.model.health.alerts.length,
+    version: Date.now(),
+  };
 }
 
 function log(msg) {
@@ -128,7 +170,8 @@ export const actions = {
       return;
     }
     source = new Elm327(transport, handlers);
-    set({ source: 'obd', status: 'pairing', values: {}, trip: freshTrip() });
+    useLearner('obd');
+    set({ lastSource: 'obd', source: 'obd', status: 'pairing', values: {}, trip: freshTrip() });
     try {
       await source.connect();
     } catch (e) {
@@ -149,10 +192,12 @@ export const actions = {
   startDemo() {
     actions.disconnect();
     source = new Simulator(handlers);
-    set({ source: 'demo', values: {}, trip: freshTrip() });
+    useLearner('demo');
+    set({ lastSource: 'demo', source: 'demo', values: {}, trip: freshTrip() });
     source.connect();
   },
   disconnect() {
+    learner.endTrip();
     if (source) source.disconnect();
     source = null;
     lastTs = 0;
@@ -161,9 +206,16 @@ export const actions = {
   resetTrip() {
     set({ trip: freshTrip() });
   },
+  dismissToast() {
+    set({ toast: null });
+  },
+  refreshLearn() {
+    set({ learn: learnSnapshot() });
+  },
   updateSettings(patch) {
     const settings = { ...state.settings, ...patch };
     setTyre(settings.tyre);
+    learner.onTyre(settings.tyre);
     speedFactor = tyreFactor(settings.tyreStock, settings.tyre) * settings.speedCorrection;
     try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch { /* ignore */ }
     set({ settings });
@@ -173,3 +225,8 @@ export const actions = {
 const subscribe = (l) => (listeners.add(l), () => listeners.delete(l));
 const getSnapshot = () => state;
 export const useDash = () => useSyncExternalStore(subscribe, getSnapshot);
+
+// Save the trip in progress if the app is closed or backgrounded for good.
+if (typeof window !== 'undefined') {
+  window.addEventListener('pagehide', () => learner.endTrip());
+}

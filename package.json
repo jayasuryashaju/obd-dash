@@ -9,9 +9,11 @@
     "build": "vite build",
     "preview": "vite preview --host",
     "android:sync": "vite build && cap sync android",
-    "android:open": "cap open android"
+    "android:open": "cap open android",
+    "server": "node server/index.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "@capacitor-community/bluetooth-le": "^6.1.0",
     "@capacitor/android": "^6.2.3",
     "@capacitor/core": "^6.2.3",

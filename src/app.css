@@ -138,3 +138,4 @@ button { font: inherit; cursor: pointer; }
 .cluster text { user-select: none; }
 .tt { color: #fff; opacity: 0.06; }
 .tt.on { opacity: 1; filter: drop-shadow(0 0 6px currentColor); }
+.actions button.ins-btn { color: #ffd15a; }

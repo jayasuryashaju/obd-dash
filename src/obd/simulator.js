@@ -38,13 +38,18 @@ export class Simulator {
 
   #step(dt) {
     this.t += dt;
+    if (this.t < 3) {
+      // ignition on, engine not yet cranked: resting battery voltage
+      this.onData({ rpm: 0, speed: 0, throttle: 0, voltage: 12.55, coolant: this.coolant, status01: 0 });
+      return;
+    }
     this.phaseLeft -= dt;
     if (this.phaseLeft <= 0) this.#nextPhase();
 
     let accel = 0;
     let thr = 0;
     switch (this.phase) {
-      case 'accel': thr = this.target; accel = (thr / 100) * (5.5 - this.gear * 0.7); break;
+      case 'accel': thr = this.target; accel = (thr / 100) * (3.2 - this.gear * 0.45); break;
       case 'cruise': thr = 18; accel = (Math.random() - 0.5) * 0.3; break;
       case 'coast': thr = 0; accel = -0.6; break;
       case 'brake': thr = 0; accel = -3.2; break;

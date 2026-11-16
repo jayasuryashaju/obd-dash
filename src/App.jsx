@@ -11,6 +11,7 @@ import Horizon from './cluster/Horizon.jsx';
 import Sport from './cluster/Sport.jsx';
 import Motorsport from './cluster/Motorsport.jsx';
 import Data from './dashboards/Data.jsx';
+import Insights from './insights/Insights.jsx';
 import { sweep } from './cluster/kit.jsx';
 
 export const DASHBOARDS = [
@@ -108,7 +109,7 @@ export default function App() {
         <C d={d} />
       </div>
 
-      {showStart && <StartScreen d={d} />}
+      {showStart && <StartScreen d={d} openInsights={() => setPanel('insights')} />}
 
       {!showStart && (
         <>
@@ -124,6 +125,7 @@ export default function App() {
               <button onClick={() => go(idx + 1)} aria-label="Next design">›</button>
             </div>
             <div className="actions">
+              <button className="ins-btn" onClick={() => setPanel(panel === 'insights' ? null : 'insights')} title="Insights">✦</button>
               <button onClick={goFullscreen} title="Fullscreen">⛶</button>
               <button onClick={() => setPanel(panel === 'log' ? null : 'log')} title="Log">≡</button>
               <button onClick={() => setPanel(panel === 'settings' ? null : 'settings')} title="Settings">⚙</button>
@@ -142,13 +144,20 @@ export default function App() {
           </div>
         </div>
       )}
+      {panel === 'insights' && <Insights d={d} close={() => setPanel(null)} />}
+      {d.toast && Date.now() - d.toast.shownAt < 12000 && panel !== 'insights' && (
+        <div className={`toast ${d.toast.level}`} onPointerDown={(e) => e.stopPropagation()} onPointerUp={(e) => e.stopPropagation()}>
+          <div><b>{d.toast.title}</b><span>{d.toast.detail}</span></div>
+          <button onClick={actions.dismissToast} aria-label="Dismiss">✕</button>
+        </div>
+      )}
       {panel === 'settings' && <Settings d={d} close={() => setPanel(null)} />}
       {panel === 'log' && <LogPanel d={d} close={() => setPanel(null)} />}
     </div>
   );
 }
 
-function StartScreen({ d }) {
+function StartScreen({ d, openInsights }) {
   const native = isNative();
   const bleOk = native || WebBleTransport.available();
   const busy = ['pairing', 'connecting', 'initialising'].includes(d.status);
@@ -199,6 +208,7 @@ function StartScreen({ d }) {
               </button>
               {native && <button className="primary alt" onClick={openPaired}>Classic Bluetooth</button>}
               <button onClick={() => { goFullscreen(); actions.startDemo(); }}>Demo drive</button>
+              <button onClick={openInsights}>✦ Insights</button>
             </div>
           </>
         )}

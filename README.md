@@ -49,3 +49,29 @@ cd android && ./gradlew assembleDebug    # → android/app/build/outputs/apk/deb
 - `src/cluster/*`: one file per instrument cluster
 - `src/studio/*`: Studio – sensor catalogue, styles, blade gauge widgets, layouts and the editor UI
 - `src/dashboards/Data.jsx`: sensor diagnostics grid
+
+## Learning & Insights (on-device)
+
+Everything below is learned on the phone and stored locally – nothing leaves the device unless you use **Ask AI**. Demo-mode data is kept separate from your car's data.
+
+- **Trips** are recorded automatically (engine on → off, or disconnect): distance, economy, idle time, harsh acceleration/braking, shift points and a 0–100 score.
+- **Gear learning**: steady driving teaches the real speed-to-rpm ratio of each gear; after 25 samples per gear the learned value replaces the book value.
+- **Fuel calibration**: log every fill-up in *Insights → Fuel & tank*. Each full-to-full tank solves correction factors per rpm range, so km/L converges on your engine. The same data drives the tank level and range estimate.
+- **Driving style**: shift points, throttle use, harshness and idling build a profile (Eco / Balanced / Sporty). The shift-up hint adapts – an efficient point at light throttle, your shift-light rpm when accelerating hard.
+- **Car health**: the app learns what's normal for *your* car (battery at rest, charging voltage, running temperature, warm-up time, long-term fuel trim, idle rpm) and alerts you when a drive is well outside that.
+
+Code: `src/learn/learner.js`, UI in `src/insights/`.
+
+## Ask AI (optional)
+
+`server/index.js` is a tiny Node server that keeps your Anthropic API key off the phone and forwards questions (with a compact summary of the learned data) to Claude.
+
+Deploy it on Render as a **Web Service** from this repo:
+
+- Build command: `npm ci --omit=dev`
+- Start command: `node server/index.js`
+- Environment variables:
+  - `ANTHROPIC_API_KEY` – your key from console.anthropic.com
+  - `APP_TOKEN` – any long random string (a password for your server)
+
+Then in the app open *Insights → Ask AI → Server settings*, set the server address (e.g. `https://wagonr-dash-api.onrender.com`) and paste the same `APP_TOKEN`. The server allows requests only from the web app and the Android app, limits each IP to 40 questions an hour, and uses `claude-opus-5-5`.

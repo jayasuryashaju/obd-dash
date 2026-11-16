@@ -23,6 +23,9 @@ export const SENSORS = {
   fuelRate: { label: 'FUEL RATE', short: 'FUEL', unit: 'L/h', min: 0, max: 8, dec: 1, get: (d) => d.fuelLph },
   avg:      { label: 'TRIP AVG', short: 'AVG', unit: 'km/L', min: 0, max: 30, dec: 1, get: (d) => avgKmpl(d.trip) },
   trip:     { label: 'TRIP', short: 'TRIP', unit: 'km', min: 0, max: 100, dec: 1, get: (d) => d.trip.distanceKm },
+  tank:     { label: 'FUEL TANK', short: 'TANK', unit: '%', min: 0, max: 100, dec: 0, get: (d) => d.learn?.tank?.pct },
+  range:    { label: 'RANGE', short: 'RANGE', unit: 'km', min: 0, max: 800, dec: 0, get: (d) => d.learn?.tank?.rangeKm },
+  score:    { label: 'DRIVE SCORE', short: 'SCORE', unit: '', min: 0, max: 100, dec: 0, get: (d) => d.learn?.score?.total },
   top:      { label: 'TOP SPEED', short: 'TOP', unit: 'km/h', min: 0, max: CAR.maxSpeed, dec: 0, get: (d) => d.trip.maxSpeed },
 };
 
